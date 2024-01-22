@@ -1,0 +1,40 @@
+### 1) hello test
+GET http://localhost:8080/api/hello
+
+
+### 2-1) login api test (admin)
+POST http://localhost:8080/api/authenticate
+Content-Type: application/json
+
+{
+  "username":"admin",
+  "password":"admin"
+}
+
+### 2-2) login api test (user) - user로 로그인 후, jwt를 받아온다.
+POST http://localhost:8080/api/authenticate
+Content-Type: application/json
+
+{
+  "username":"mason",
+  "password":"mason"
+}
+
+
+### 3) signup api test - 회원 가입 테스트. 일반적으로 user role으로 가입된다
+POST http://localhost:8080/api/signup
+Content-Type: application/json
+
+{
+  "username":"mason",
+  "password":"mason",
+  "nickname": "dunphy"
+}
+
+### 4-1) admin role api test (by user role) - admin만 호출할 수 있는 api를 user role 계정으로 로그인 시도, Authorization의 토큰은 user login 결과를 사용. 결과는 403에러가 나와야 정상
+GET http://localhost:8080/api/user/mason
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXNvbiIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE3MDYwMTY0NjV9.9b88NQCV7OdCzYUrepxNgGreYAUNWhuerIbLZBpFGmOWp2fNazhIcMWEPVn9vEFxH5W6iNtC9BumVVVuqMuP2A
+
+### 4-2) admin role api test (by admin role) - admin만 호출할 수 있는 api를 admin role 계정으로 로그인 시도, Authorization의 토큰은 admin login 결과를 사용. 결과는 성공
+GET http://localhost:8080/api/user/admin
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTcwNjAxNjU1NX0.ABs02JSWN8dz8vbXShW9oLRayfNtjAJp7IiCDYoVSeqMa0999sXYUaNA3wXEWZsza2whXCv1fbMZ2YXHkxBCIg"
